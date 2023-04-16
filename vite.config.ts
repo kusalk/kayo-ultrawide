@@ -62,7 +62,7 @@ export default defineConfig({
         chunkFileNames: isDev
           ? "assets/js/[name].js"
           : "assets/js/[name].[hash].js",
-        assetFileNames: (assetInfo) => {
+        assetFileNames: assetInfo => {
           const { dir, name: _name } = path.parse(assetInfo.name);
           const assetFolder = dir.split("/").at(-1);
           const name = assetFolder + firstUpperCase(_name);
@@ -78,7 +78,7 @@ export default defineConfig({
 
 function firstUpperCase(str: string) {
   const firstAlphabet = new RegExp(/( |^)[a-z]/, "g");
-  return str.toLowerCase().replace(firstAlphabet, (L) => L.toUpperCase());
+  return str.toLowerCase().replace(firstAlphabet, L => L.toUpperCase());
 }
 
 let cacheInvalidationKey: string = generateKey();
