@@ -1,4 +1,4 @@
-name: Build And Test
+name: Build and Test
 
 on:
   push:
@@ -7,17 +7,15 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
-
+  build-and-test:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        cache: 'yarn'
-    - run: yarn install
-    - run: yarn build:hmr
-    - run: yarn test
-    - run: yarn build
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: npm install
+      - run: npm run build:hmr
+      - run: npm run test
+      - run: npm run build
