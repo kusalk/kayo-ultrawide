@@ -10,7 +10,7 @@ const manifest: chrome.runtime.ManifestV3 = {
   description: packageJson.description,
   action: {
     default_popup: "src/pages/popup/index.html",
-    default_icon: "icon-34.png",
+    default_icon: "icon-48.png",
   },
   icons: {
     "128": "icon-128.png",
@@ -32,7 +32,7 @@ const manifest: chrome.runtime.ManifestV3 = {
         "assets/js/*.js",
         "assets/css/*.css",
         "icon-128.png",
-        "icon-34.png",
+        "icon-48.png",
       ],
       matches: ["*://*/*"],
     },
