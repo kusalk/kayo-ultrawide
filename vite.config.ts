@@ -46,7 +46,6 @@ export default defineConfig({
       input: {
         content: resolve(pagesDir, "content", "index.ts"),
         popup: resolve(pagesDir, "popup", "index.html"),
-        options: resolve(pagesDir, "options", "index.html"),
       },
       watch: {
         include: ["src/**", "vite.config.ts", "manifest.ts"],
