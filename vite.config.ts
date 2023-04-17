@@ -54,8 +54,8 @@ export default defineConfig({
         options: resolve(pagesDir, "options", "index.html"),
       },
       watch: {
-        include: ["src/**", "vite.config.ts"],
-        exclude: ["node_modules/**", "src/**/*.spec.ts"],
+        include: ["src/**", "vite.config.ts", "manifest.ts"],
+        exclude: ["node_modules/**", "src/**/*.spec.*", "src/**/*.test.*"],
       },
       output: {
         entryFileNames: "src/pages/[name]/index.js",
