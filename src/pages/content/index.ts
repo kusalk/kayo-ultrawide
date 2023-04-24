@@ -23,12 +23,18 @@ function click(e: MouseEvent) {
     return;
   }
   if (isLayoutButton(e.target)) {
-    const newLayout = e.target.getAttribute("aria-label")?.toLowerCase();
-    if (newLayout) {
-      layout = newLayout;
-    }
-    main();
+    triggerLayoutButton(e.target);
+  } else if (isLayoutSpan(e.target)) {
+    triggerLayoutButton(e.target.parentElement);
   } else if (e.target.className.includes("layout-composer")) {
+    setTimeout(main, kayoScriptExecMs);
+  }
+}
+
+function triggerLayoutButton(el: Element) {
+  const newLayout = el?.getAttribute("aria-label")?.toLowerCase();
+  if (newLayout && layout != newLayout) {
+    layout = newLayout;
     setTimeout(main, kayoScriptExecMs);
   }
 }

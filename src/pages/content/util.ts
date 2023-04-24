@@ -68,3 +68,7 @@ export function setElWTL(
 export function isLayoutButton(el: Element): boolean {
   return el.tagName == "BUTTON" && el.className.includes("layout-selector");
 }
+
+export function isLayoutSpan(el: Element): boolean {
+  return el.tagName == "SPAN" && el.className.includes("layout-selector");
+}
