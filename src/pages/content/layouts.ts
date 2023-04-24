@@ -20,15 +20,18 @@ export function setPipLayout(videos: Array<HTMLElement>) {
   const pipVideoMinRatio = 2;
   const pipVideoMinWidth = `calc(${mainVideoWidth} / ${pipVideoMinRatio})`;
 
-  setElWTL(mainVideo, mainVideoWidth, "0", "0");
   const remainingWidth = `calc(100vw - ${mainVideoWidth})`;
-  const pipVideoWidth = `max(${pipVideoMinWidth}, min(${remainingWidth}, ${mainVideoWidth}))`;
+  const pipVideoWidth = `clamp(${pipVideoMinWidth}, ${remainingWidth}, ${mainVideoWidth})`;
   const pipVideoHeight = w2h169Css(pipVideoWidth);
+
+  const mainVideoLeft = `max(0px, calc((100vw - ${mainVideoWidth} - ${pipVideoWidth}) / 2))`;
+
+  setElWTL(mainVideo, mainVideoWidth, "0", mainVideoLeft);
   setElWTL(
     pipVideo,
     pipVideoWidth,
     `calc((100vh - ${pipVideoHeight}) / 2)`,
-    `min(100vw - ${pipVideoWidth}, ${mainVideoWidth})`
+    `min(calc(100vw - ${pipVideoWidth}), calc(${mainVideoLeft} + ${mainVideoWidth}))`
   );
 }
 
@@ -74,13 +77,15 @@ export function setNUpLayout(videos: Array<HTMLElement>) {
   )})`;
   const sideVideoHeight = w2h169Css(sideVideoWidth);
 
-  setElWTL(mainVideo, mainVideoWidth, "0", "0");
+  const mainVideoLeft = `calc((100vw - ${mainVideoWidth} - ${sideVideoWidth}) / 2)`;
+
+  setElWTL(mainVideo, mainVideoWidth, "0", mainVideoLeft);
   sideVideos.forEach((v, i) => {
     setElWTL(
       v,
       sideVideoWidth,
       `calc((100vh - (${sideVideoHeight} * ${sideVideos.length})) / 2 + (${sideVideoHeight} * ${i}))`,
-      mainVideoWidth
+      `calc(${mainVideoLeft} + ${mainVideoWidth})`
     );
   });
 }
