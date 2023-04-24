@@ -7,6 +7,7 @@ import {
   isLayoutButton,
   removeItem,
   setElWTL,
+  sortVideosGrid,
   sortVideosTopToBottom,
   w2h169,
   w2h169Css,
@@ -92,6 +93,35 @@ describe("sortVideosTopToBottom", () => {
       )
     ).toEqual([
       videoLiEls.querySelector("li:nth-child(2)"),
+      videoLiEls.querySelector("li:nth-child(3)"),
+      videoLiEls.querySelector("li:nth-child(1)"),
+    ]);
+  });
+});
+
+describe("sortVideosLRTB", () => {
+  it("should sort videos left to right, top to bottom", () => {
+    const videoLiEls = document.createElement("div");
+    videoLiEls.innerHTML = `
+      <li style="left: 20px; top: 20px"></li>
+      <li style="left: 10px; top: 10px"></li>
+      <li style="left: 20px; top: 10px"></li>
+      <li style="left: 10px; top: 20px"></li>
+    `;
+    videoLiEls.querySelectorAll("li").forEach(li => {
+      li.getBoundingClientRect = () =>
+        ({
+          x: parseInt(li.style.left),
+          y: parseInt(li.style.top),
+        } as DOMRect);
+    });
+    expect(
+      sortVideosGrid(
+        Array.prototype.slice.call(videoLiEls.querySelectorAll("li"))
+      )
+    ).toEqual([
+      videoLiEls.querySelector("li:nth-child(2)"),
+      videoLiEls.querySelector("li:nth-child(4)"),
       videoLiEls.querySelector("li:nth-child(3)"),
       videoLiEls.querySelector("li:nth-child(1)"),
     ]);

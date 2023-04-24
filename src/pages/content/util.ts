@@ -44,6 +44,21 @@ export function sortVideosTopToBottom(
   });
 }
 
+export function sortVideosGrid(
+  videoLiEls: Array<HTMLElement>
+): Array<HTMLElement> {
+  const sorted = videoLiEls.sort((a, b) => {
+    const yD = a.getBoundingClientRect().y - b.getBoundingClientRect().y;
+    if (yD != 0) {
+      return yD;
+    } else {
+      return a.getBoundingClientRect().x - b.getBoundingClientRect().x;
+    }
+  });
+  // Tmp fix
+  return [sorted[0], sorted[2], sorted[1], sorted[3]];
+}
+
 export function clearBordersAndPadding(videoLiEls: Array<HTMLElement>) {
   videoLiEls.forEach(v => {
     v.style.border = "0";

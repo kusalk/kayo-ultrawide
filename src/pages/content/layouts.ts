@@ -4,6 +4,7 @@ import {
   h2w169Css,
   removeItem,
   setElWTL,
+  sortVideosGrid,
   sortVideosTopToBottom,
   w2h169Css,
 } from "@pages/content/util";
@@ -88,4 +89,41 @@ export function setNUpLayout(videos: Array<HTMLElement>) {
       `calc(${mainVideoLeft} + ${mainVideoWidth})`
     );
   });
+}
+
+export function setStdLayout(videos: Array<HTMLElement>) {
+  if (videos.length != 1) {
+    throw new Error("Incorrect number of videos to set Standard layout");
+  }
+
+  const mainVideo = videos[0];
+
+  const mainVideoWidth = `${h2w169(100)}vh`;
+  const mainVideoLeft = `calc((100vw - ${mainVideoWidth}) / 2)`;
+
+  setElWTL(mainVideo, mainVideoWidth, "0", mainVideoLeft);
+}
+
+export function setGridLayout(videos: Array<HTMLElement>) {
+  if (videos.length != 4) {
+    throw new Error("Incorrect number of videos to set Grid layout");
+  }
+
+  const orderedVideos = sortVideosGrid(videos);
+
+  const topLeftVideo = orderedVideos[0];
+  const botLeftVideo = orderedVideos[1];
+  const topRightVideo = orderedVideos[2];
+  const botRightVideo = orderedVideos[3];
+
+  const videoWidth = `${h2w169(50)}vh`;
+  const videoHeight = w2h169Css(videoWidth);
+
+  const leftColLeft = `calc((100vw - 2 * ${videoWidth}) / 2)`;
+  const rightColLeft = `calc(${leftColLeft} + ${videoWidth})`;
+
+  setElWTL(topLeftVideo, videoWidth, "0", leftColLeft);
+  setElWTL(botLeftVideo, videoWidth, videoHeight, leftColLeft);
+  setElWTL(topRightVideo, videoWidth, "0", rightColLeft);
+  setElWTL(botRightVideo, videoWidth, videoHeight, rightColLeft);
 }

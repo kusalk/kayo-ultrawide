@@ -2,11 +2,14 @@ import {
   clearBordersAndPadding,
   filterVisibleVideos,
   isLayoutButton,
+  isLayoutSpan,
 } from "@pages/content/util";
 import {
+  setGridLayout,
   setNUpLayout,
   setPipLayout,
   setSbsLayout,
+  setStdLayout,
 } from "@pages/content/layouts";
 
 document.addEventListener("click", e => click(e));
@@ -16,7 +19,7 @@ document.addEventListener("fullscreenchange", () =>
 );
 
 let layout = "standard";
-const kayoScriptExecMs = 100;
+const kayoScriptExecMs = 250;
 
 function click(e: MouseEvent) {
   if (!(e.target instanceof Element)) {
@@ -44,7 +47,7 @@ function doubleClick(e: MouseEvent) {
     return;
   }
   layout = "standard";
-  main();
+  setTimeout(main, kayoScriptExecMs);
 }
 
 function main() {
@@ -54,8 +57,15 @@ function main() {
   if (layoutEl == null) {
     return;
   }
+
   const fsEl: Element | null = document.fullscreenElement;
-  if (fsEl == null || fsEl.clientWidth / fsEl.clientHeight <= 16 / 9) {
+  if (fsEl == null) {
+    resetLayout(layoutEl);
+    return;
+  }
+
+  const aR = fsEl.clientWidth / fsEl.clientHeight;
+  if (aR <= 16 / 9) {
     resetLayout(layoutEl);
     return;
   }
@@ -63,11 +73,11 @@ function main() {
   const visibleLiEls: Array<HTMLElement> = filterVisibleVideos(
     layoutEl.querySelectorAll<HTMLElement>("li[class*=layout-composer]")
   );
-  // TODO: Backup stock layout
   setLayout(visibleLiEls, layoutEl);
 }
 
 function setLayout(visibleLiEls: Array<HTMLElement>, layoutEl: HTMLElement) {
+  console.log(`Kayo Ultrawide - overriding layout: ${layout.toUpperCase()}`);
   layoutEl.style.maxWidth = "100%";
   clearBordersAndPadding(visibleLiEls);
   switch (layout) {
@@ -82,9 +92,10 @@ function setLayout(visibleLiEls: Array<HTMLElement>, layoutEl: HTMLElement) {
       setNUpLayout(visibleLiEls);
       break;
     case "standard":
+      setStdLayout(visibleLiEls);
+      break;
     case "grid":
-    default:
-      resetLayout(layoutEl);
+      setGridLayout(visibleLiEls);
       break;
   }
 }
@@ -93,5 +104,19 @@ function resetLayout(layoutEl: HTMLElement | null) {
   if (layoutEl) {
     layoutEl.style.removeProperty("max-width");
   }
-  // TODO: Restore backed up stock layout
+  // TODO Implement
+  switch (layout) {
+    case "pip":
+      break;
+    case "2up":
+      break;
+    case "3up":
+      break;
+    case "4up":
+      break;
+    case "standard":
+      break;
+    case "grid":
+      break;
+  }
 }
