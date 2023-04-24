@@ -11,7 +11,8 @@ import {
 
 export function setPipLayout(videos: Array<HTMLElement>) {
   if (videos.length != 2) {
-    throw new Error("Incorrect number of videos to set PIP layout");
+    console.error("Incorrect number of videos to set PIP layout");
+    return;
   }
 
   const mainVideo = getMainVideo(videos);
@@ -38,7 +39,8 @@ export function setPipLayout(videos: Array<HTMLElement>) {
 
 export function setSbsLayout(videos: Array<HTMLElement>) {
   if (videos.length != 2) {
-    throw new Error("Incorrect number of videos to set SBS layout");
+    console.error("Incorrect number of videos to set SBS layout");
+    return;
   }
 
   const leftVideo = getMainVideo(videos);
@@ -63,7 +65,8 @@ export function setSbsLayout(videos: Array<HTMLElement>) {
 
 export function setNUpLayout(videos: Array<HTMLElement>) {
   if (videos.length < 2) {
-    throw new Error("Insufficient videos to set NUp layout");
+    console.error("Insufficient videos to set NUp layout");
+    return;
   }
 
   const mainVideo = getMainVideo(videos);
@@ -93,7 +96,8 @@ export function setNUpLayout(videos: Array<HTMLElement>) {
 
 export function setStdLayout(videos: Array<HTMLElement>) {
   if (videos.length != 1) {
-    throw new Error("Incorrect number of videos to set Standard layout");
+    console.error("Incorrect number of videos to set Standard layout");
+    return;
   }
 
   const mainVideo = videos[0];
@@ -106,7 +110,8 @@ export function setStdLayout(videos: Array<HTMLElement>) {
 
 export function setGridLayout(videos: Array<HTMLElement>) {
   if (videos.length != 4) {
-    throw new Error("Incorrect number of videos to set Grid layout");
+    console.error("Incorrect number of videos to set Grid layout");
+    return;
   }
 
   const orderedVideos = sortVideosGrid(videos);
