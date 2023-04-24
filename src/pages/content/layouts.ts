@@ -117,8 +117,8 @@ export function setGridLayout(videos: Array<HTMLElement>) {
   const orderedVideos = sortVideosGrid(videos);
 
   const topLeftVideo = orderedVideos[0];
-  const botLeftVideo = orderedVideos[1];
-  const topRightVideo = orderedVideos[2];
+  const topRightVideo = orderedVideos[1];
+  const botLeftVideo = orderedVideos[2];
   const botRightVideo = orderedVideos[3];
 
   const videoWidth = `${h2w169(50)}vh`;

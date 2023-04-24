@@ -121,8 +121,8 @@ describe("sortVideosLRTB", () => {
       )
     ).toEqual([
       videoLiEls.querySelector("li:nth-child(2)"),
-      videoLiEls.querySelector("li:nth-child(4)"),
       videoLiEls.querySelector("li:nth-child(3)"),
+      videoLiEls.querySelector("li:nth-child(4)"),
       videoLiEls.querySelector("li:nth-child(1)"),
     ]);
   });
