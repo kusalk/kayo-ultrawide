@@ -11,6 +11,7 @@ import {
   setSbsLayout,
   setStdLayout,
 } from "@pages/content/layouts";
+import { setDefaultLayout } from "@pages/content/default-layouts";
 
 document.addEventListener("click", e => click(e));
 document.addEventListener("dblclick", e => doubleClick(e));
@@ -58,28 +59,29 @@ function main() {
     return;
   }
 
+  const visibleLiEls: Array<HTMLElement> = filterVisibleVideos(
+    layoutEl.querySelectorAll<HTMLElement>("li[class*=layout-composer]")
+  );
+  clearBordersAndPadding(visibleLiEls);
+
   const fsEl: Element | null = document.fullscreenElement;
   if (fsEl == null) {
-    resetLayout(layoutEl);
+    defaultLayout(visibleLiEls, layoutEl);
     return;
   }
 
   const aR = fsEl.clientWidth / fsEl.clientHeight;
   if (aR <= 16 / 9) {
-    resetLayout(layoutEl);
+    defaultLayout(visibleLiEls, layoutEl);
     return;
   }
 
-  const visibleLiEls: Array<HTMLElement> = filterVisibleVideos(
-    layoutEl.querySelectorAll<HTMLElement>("li[class*=layout-composer]")
-  );
-  setLayout(visibleLiEls, layoutEl);
+  wideLayout(visibleLiEls, layoutEl);
 }
 
-function setLayout(visibleLiEls: Array<HTMLElement>, layoutEl: HTMLElement) {
+function wideLayout(visibleLiEls: Array<HTMLElement>, layoutEl: HTMLElement) {
   console.log(`Kayo Ultrawide - overriding layout: ${layout.toUpperCase()}`);
   layoutEl.style.maxWidth = "100%";
-  clearBordersAndPadding(visibleLiEls);
   switch (layout) {
     case "pip":
       setPipLayout(visibleLiEls);
@@ -100,23 +102,10 @@ function setLayout(visibleLiEls: Array<HTMLElement>, layoutEl: HTMLElement) {
   }
 }
 
-function resetLayout(layoutEl: HTMLElement | null) {
-  if (layoutEl) {
-    layoutEl.style.removeProperty("max-width");
-  }
-  // TODO Implement
-  switch (layout) {
-    case "pip":
-      break;
-    case "2up":
-      break;
-    case "3up":
-      break;
-    case "4up":
-      break;
-    case "standard":
-      break;
-    case "grid":
-      break;
-  }
+function defaultLayout(
+  visibleLiEls: Array<HTMLElement>,
+  layoutEl: HTMLElement
+) {
+  layoutEl.style.removeProperty("max-width");
+  setDefaultLayout(visibleLiEls, layout);
 }
