@@ -1,3 +1,6 @@
+## Kayo updated their media player on 2023-07-10 and this extension is no longer functioning.
+
+---
 # Kayo Ultrawide Chrome Extension
 
 ![Chrome Extension](https://img.shields.io/badge/Chromium%20Extension-blue?labelColor=grey&style=flat-square&logo=googlechrome&logoColor=4285F4)
